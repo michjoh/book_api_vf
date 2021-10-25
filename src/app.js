@@ -21,26 +21,37 @@ app.get("/", auth, function (req, res) {
     res.send("Hello World!");
 });
 
-let books;
-MongoClient.connect(url, function(err, client) {
-    books =  client.db().collection("books");
-})
+const booksPromise = MongoClient.connect(url).then(function (client) {
+    return client.db().collection("books");
+});
+
 
 app.get("/book/:isbn", function (req, res) {
     const isbn = req.params.isbn;
-    books.findOne({isbn}, { projection: {_id: 0} }, function(err, book) {
-        res.json(book);
-    });
+    booksPromise
+        .then(function (books) {
+            return books.findOne(
+                {isbn},
+                { projection: {_id: 0} }
+            );
+        })
+        .then(function (book) {
+            res.json(book);
+        });
 });
 app.post("/book", function(req, res) {
     const {title, authors, isbn, description} = req.body;
-    books.updateOne(
-        {isbn: isbn},
-        { $set: {title, authors, isbn, description} },
-        {upsert: true}
-    );
-
-    res.json({title, authors, isbn, description});
+    booksPromise
+        .then(function (books) {
+            return books.updateOne(
+                {isbn: isbn},
+                {$set : {title, authors, isbn, description} },
+                {upsert: true}
+            );
+        })
+        .then(function () {
+            res.json({title, authors, isbn, description});
+        });
 });
 
 app.use(function notFound(req, res, next) {
