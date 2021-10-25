@@ -1,12 +1,15 @@
 const bookRepository = require("./bookRepository");
+const bookService = require("./bookService");
 
 module.exports = {
     async createOrUpdate(req, res, next) {
+        // HTTP
         const {title, authors, isbn, description} = req.body;
         try {
-            await bookRepository.createOrUpdate({title, authors, isbn, description});
+            // JS
+            await bookService.createOrUpdate({title, authors, isbn, description});
+            // HTTP
             res.redirect(`/book/${isbn}`);
-            // res.json({title, authors, isbn, description});
         } catch (e) {
             next(e);
         }

@@ -5,11 +5,11 @@ const connectionPromise = MongoClient.connect(url);
 const booksPromise = connectionPromise.then(client => client.db().collection("books"));
 
 module.exports = {
-    async createOrUpdate({title, authors, isbn, description}) {
+    async createOrUpdate({title, slug, authors, isbn, description}) {
         const books = await booksPromise;
         return books.updateOne(
             {isbn: isbn},
-            {$set : {title, authors, isbn, description} },
+            {$set : {title, slug, authors, isbn, description} },
             {upsert: true}
         );
     },

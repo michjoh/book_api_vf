@@ -3,7 +3,7 @@ const app = require('../../src/app');
 const assert = require('assert');
 
 describe('Book inventory', function () {
-    it('allows to stock up the items', async function (done) {
+    it('allows to stock up the items', async function () {
         const request = httpClient(app);
 
         const createResult = await request
