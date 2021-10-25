@@ -26,32 +26,32 @@ const booksPromise = MongoClient.connect(url).then(function (client) {
 });
 
 
-app.get("/book/:isbn", function (req, res) {
+app.get("/book/:isbn", async function (req, res, next) {
     const isbn = req.params.isbn;
-    booksPromise
-        .then(function (books) {
-            return books.findOne(
-                {isbn},
-                { projection: {_id: 0} }
-            );
-        })
-        .then(function (book) {
-            res.json(book);
-        });
+    try {
+        const books = await booksPromise;
+        const book = await books.findOne(
+            {isbn},
+            {projection: {_id: 0}}
+        );
+        res.json(book);
+    } catch (e) {
+        next(e);
+    }
+
 });
-app.post("/book", function(req, res) {
+app.post("/book", async function (req, res, next) {
     const {title, authors, isbn, description} = req.body;
-    booksPromise
-        .then(function (books) {
-            return books.updateOne(
-                {isbn: isbn},
-                {$set : {title, authors, isbn, description} },
-                {upsert: true}
-            );
-        })
-        .then(function () {
-            res.json({title, authors, isbn, description});
-        });
+    try {
+        const books = await booksPromise;
+        await books.updateOne(
+            {isbn: isbn},
+            {$set : {title, authors, isbn, description} },
+            {upsert: true});
+        res.json({title, authors, isbn, description});
+    } catch (e) {
+        next(e);
+    }
 });
 
 app.use(function notFound(req, res, next) {
