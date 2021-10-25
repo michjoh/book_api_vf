@@ -1,10 +1,12 @@
 const httpClient = require('supertest');
 const app = require('../../src/app');
 const assert = require('assert');
+const dbPromise = require("../../src/connection");
 
 describe('Book inventory', function () {
     it('allows to stock up the items', async function () {
-        const request = httpClient(app);
+        const db = await dbPromise;
+        const request = httpClient(app(db));
 
         const createResult = await request
             .post('/book')
