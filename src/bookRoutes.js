@@ -6,5 +6,6 @@ const validateBook = require("./validateBookMiddleware");
 
 router.post("/book", validateBook,  controller.createOrUpdate);
 router.get("/book/:isbn", controller.details);
+router.get("/book", controller.getList);
 
 module.exports = router;

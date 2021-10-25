@@ -13,7 +13,6 @@ const wrapWithTryCatch = (fn) => {
     };
 };
 
-
 module.exports = ({bookService, bookRepository}) => withErrorHandling({
     async createOrUpdate(req, res, next) {
         const {title, authors, isbn, description} = req.body;
@@ -24,5 +23,10 @@ module.exports = ({bookService, bookRepository}) => withErrorHandling({
         const isbn = req.params.isbn;
         const book = await bookRepository.findOne(isbn);
         res.json(book);
+    },
+    async getList(req, res) {
+        const books = await bookRepository.findAll();
+
+        res.json(books);
     }
 });
