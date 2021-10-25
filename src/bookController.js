@@ -10,6 +10,7 @@ const bookController = {
         const {title, authors, isbn, description} = req.body;
         try {
             // JS
+            // await bookRepository.createOrUpdate({title, authors, isbn, description});
             const books = await booksPromise;
             await books.updateOne(
                 {isbn: isbn},
