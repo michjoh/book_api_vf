@@ -1,18 +1,21 @@
-const express = require("express");
-const bookRoutes = require("./bookRoutes");
-const {notFound, errorHandler} = require("./error");
+module.exports = (db) => {
+    const express = require("express");
 
-const app = express();
+    const bookRoutes = require("./bookRoutes")(db);
+    const {notFound, errorHandler} = require("./error");
 
-
-app.use(express.json());
-app.get("/", function (req, res) {
-    res.send("Hello World!");
-});
-app.use("/", bookRoutes);
+    const app = express();
 
 
-app.use(notFound);
-app.use(errorHandler);
+    app.use(express.json());
+    app.get("/", function (req, res) {
+        res.send("Hello World!");
+    });
+    app.use("/", bookRoutes);
 
-module.exports = app;
+
+    app.use(notFound);
+    app.use(errorHandler);
+
+    return app;
+};
