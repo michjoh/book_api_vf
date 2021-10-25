@@ -1,6 +1,3 @@
-// const bookRepository = require("./bookRepository");
-// const bookService = require("./bookService");
-
 // Dependency Injection - passing args to fns
 module.exports = ({bookService, bookRepository}) => ({
     async createOrUpdate(req, res, next) {
