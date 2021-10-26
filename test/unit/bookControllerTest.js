@@ -1,5 +1,5 @@
 const assert = require('assert');
-const bookControllerFactory = require('../../src/bookController');
+const bookControllerFactory = require('../../src/bookcatalog/bookController');
 
 describe('Book controller', function () {
     it('create or update happy path', async function () {

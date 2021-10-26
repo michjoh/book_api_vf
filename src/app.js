@@ -1,7 +1,7 @@
 module.exports = (db) => {
     const express = require("express");
 
-    const bookRoutes = require("./bookRoutes")(db);
+    const bookRoutes = require("./bookcatalog/bookRoutes")(db);
     const {notFound, errorHandler} = require("./error");
 
     const app = express();

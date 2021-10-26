@@ -1,5 +1,5 @@
-const bookServiceFactory = require("../../src/bookService");
-const bookRepositoryFactory = require("../../src/inMemoryBookRepository");
+const bookServiceFactory = require("../../src/bookcatalog/bookService");
+const bookRepositoryFactory = require("../../src/bookcatalog/inMemoryBookRepository");
 const assert = require("assert");
 
 describe('Book service', function () {

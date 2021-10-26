@@ -8,3 +8,8 @@ const bookService = bookRepository => ({
 });
 
 module.exports = bookService;
+
+
+// ActiveRecrod
+// new Book("asdfdsaf").save()
+// Book.find()
